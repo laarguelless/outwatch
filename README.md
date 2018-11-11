@@ -243,7 +243,7 @@ div(
   attr("everything").accum("-") := "im",
   attr("everything").accum("-") := "possible",
 )
-// <div everything="im-possible"></div>
+// <div everything="is-possible"></div>
 ```
 
 If you think there is something missing in Scala Dom Types, please open a PR or Issue. Usually it's just one line of code.
