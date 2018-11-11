@@ -339,7 +339,7 @@ div("Argh!", bigFont)
 // <div style="font-size: 40px; font-weight: bold;">Argh!</div>
 ```
 
-Of course you could also use a `Seq[VDomModifier]` instead.
+You can also use a `Seq[VDomModifier]` directly instead of using `apply` defined in the [VDomModifier](src/main/scala/outwatch/dom/package.scala) object.
 
 
 #### Components
