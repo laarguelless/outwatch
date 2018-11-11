@@ -321,7 +321,7 @@ Source Code: [AsVDomModifier.scala](src/main/scala/outwatch/AsVDomModifier.scala
 The important types we were using in the examples above are `VNode` and `VDomModifier`:
 
 ```scala
-val vnode:VNode = div()
+val vnode: VNode = div()
 val modifiers:List[VDomModifier] = List("Hello", id := "main", color := "tomato", vnode)
 ```
 
