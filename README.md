@@ -169,7 +169,7 @@ Multiple styles will me merged to one style attribute:
 
 ```scala
 div(backgroundColor := "powderblue", border := "2px solid #222", "Hello")
-// <div style="background-color:powderblue; border: 2px solid #222">Hello</div>
+// <div style="background-color: powderblue; border: 2px solid #222">Hello</div>
 ```
 
 Again, the order of styles, attributes and inner tags does not matter:
