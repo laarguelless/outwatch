@@ -322,7 +322,7 @@ The important types we were using in the examples above are `VNode` and `VDomMod
 
 ```scala
 val vnode: VNode = div()
-val modifiers:List[VDomModifier] = List("Hello", id := "main", color := "tomato", vnode)
+val modifiers: List[VDomModifier] = List("Hello", id := "main", color := "tomato", vnode)
 ```
 
 Every `VNode` contains a sequence of `VDomModifier`. A `VNode` is a `VDomModifier` itself.
