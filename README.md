@@ -240,7 +240,7 @@ htmlTag("app")(style("user-select") := "none", attr("everything") := "possible")
 You can also define the accumulation behavior of custom attributes:
 ```scala
 div(
-  attr("everything").accum("-") := "im",
+  attr("everything").accum("-") := "is",
   attr("everything").accum("-") := "possible",
 )
 // <div everything="is-possible"></div>
