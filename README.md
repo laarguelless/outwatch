@@ -176,7 +176,7 @@ Again, the order of styles, attributes and inner tags does not matter:
 
 ```scala
 div(h1("Welcome to my website"), backgroundColor := "powderblue", id := "header")
-// <div style="background-color:powderblue" id="header">Welcome to my website</div>
+// <div style="background-color: powderblue" id="header">Welcome to my website</div>
 ```
 
 Some styles have type safe values:
