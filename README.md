@@ -520,10 +520,10 @@ import monix.execution._
 
 implicit def RxAsValueObservable: AsValueObservable[Rx] = new AsValueObservable[Rx] {
   override def as[T](stream: Rx[T]): ValueObservable[T] = new ValueObservable[T]{
-    def value = stream.now
+    def value = Option(stream.now)
     def observable = Observable.create[T](OverflowStrategy.Unbounded) { observer =>
       implicit val ctx = Ctx.Owner.Unsafe
-      val obs = rx.triggerLater(observer.onNext(_))
+      val obs = stream.triggerLater(observer.onNext(_))
       Cancelable(() => obs.kill())
     }
   }
