@@ -14,7 +14,7 @@ You can find more examples and features at the end of this readme.
 
 
 ## Getting started
-### g8 template
+### Start with a template
 For a quick start, install `java`, `sbt`, `nodejs` and `yarn` and use the following g8 template:
 ```bash
 sbt new outwatch/seed.g8
@@ -30,7 +30,7 @@ and point your browser to http://localhost:8080.
 Changes to the code will trigger a recompile and automatically refresh the page in the browser.
 
 
-### Manual usage
+### Use in an already existing project
 Install `java`, `sbt` and  `nodejs`, if you haven't already.
 Create a new SBT project and add the ScalaJS and Scala-js-bundler plugin to your `plugins.sbt`:
 ```scala
@@ -41,6 +41,11 @@ Then add the outwatch dependency to your `build.sbt`.
 
 ```scala
 libraryDependencies += "io.github.outwatch" %%% "outwatch" % "1.0.0-RC2"
+```
+
+And enable the `scalajs-bundler` plugin:
+```scala
+enablePlugins(ScalaJSBundlerPlugin)
 ```
 
 If you are curious and want to try the state of the current `master` branch, add the following instead:
@@ -60,6 +65,7 @@ Like that you can try the latest features from specific commits on `master`, oth
 
 To configure hot reloading with webpack devserver, check out [build.sbt](https://github.com/OutWatch/seed.g8/blob/master/src/main/g8/build.sbt) and [webpack.config.dev.js](https://github.com/OutWatch/seed.g8/blob/master/src/main/g8/webpack.config.dev.js) from the [g8 template](https://github.com/OutWatch/seed.g8).
 
+If anything is not working, cross-check how things are done in the template.
 
 ## Bugs and Feedback
 For bugs, questions and discussions please use [Github Issues](https://github.com/OutWatch/outwatch/issues).
@@ -95,6 +101,7 @@ To render html content with outwatch, create a component and render it into the 
 ```scala
 import outwatch.dom._
 import outwatch.dom.dsl._
+import monix.execution.Scheduler.Implicits.global
 
 object Main {
   def main(args: Array[String]): Unit = {
@@ -111,11 +118,13 @@ Running `Main` will replace `<div id="app"></div>` with the content defined in `
 ```html
 ...
 <body>
-    <div>Hello World</div>
+    <div id="app">Hello World</div>
     ...
 </body>
 ...
 ```
+
+**Important:** In your application, `OutWatch.renderReplace` should be called only once at the end of the main method. To create dynamic content, you will design your data-flow with `Obvervable`, `Subject` and/or `Handler` and then instantiate it only once with this method call. Before that, no `Observable` subscription will happen.
 
 ### Static Content
 First, we will focus on creating immutable/static content that will not change over time. The following examples illustrate to construct and transform HTML/SVG tags, attributes and inline stylesheets.
@@ -429,12 +438,27 @@ div(
 To visualize updates, use an `Observable[VDomModifier]` as if it was a `VDomModifier`.
 
 ```scala
+import outwatch.dom._
+import outwatch.dom.dsl._
+
 import monix.reactive.Observable
+import monix.execution.Scheduler.Implicits.global
+
 import concurrent.duration._
-    
-val counter = Observable.interval(1 second)
-div("count: ", counter)
+
+object Main {
+  def main(args: Array[String]): Unit = {
+
+    val counter = Observable.interval(1 second)
+    val counterComponent = div("count: ", counter)
+
+    OutWatch.renderReplace("#app", counterComponent).unsafeRunSync()
+  }
+}
 ```
+
+**Important:** In your application, `OutWatch.renderReplace` should be called only once at the end of the main method. To create dynamic content, you will design your data-flow with `Obvervable`, `Subject` and/or `Handler` and then instantiate it only once with this method call. Before that, no `Observable` subscription will happen.
+
 
 #### Dynamic attributes
 Attributes can also take dynamic values.
@@ -484,6 +508,14 @@ div("Hello ", nodeStream)
 #### Streaming of lifecycle hooks
 
 ### scala.rx
+
+To use outwatch with [scala.rx](https://github.com/lihaoyi/scala.rx), use the following implicits:
+
+```scala
+
+```
+
+
 ### d3
 ### fontAwesome
 ### draggable
