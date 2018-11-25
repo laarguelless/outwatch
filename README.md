@@ -560,6 +560,14 @@ implicit def obsToCancelable(obs: Obs): Cancelable = {
 #### features from scalatags
 ### Check Changelog, commits and tests for more features
 
+### debugging snabbdom patches
+
+```scala
+helpers.OutwatchTracing.patch.zipWithIndex.foreach { case (proxy, index) =>
+  org.scalajs.dom.console.log(s"Snabbdom patch ($index)!", JSON.parse(JSON.stringify(proxy)), proxy)
+}
+```
+
 
 
 ## LICENSE
