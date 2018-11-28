@@ -503,6 +503,9 @@ div("Hello ", nodeStream)
 
 #### Application Architecture
 
+### Gotchas
+apply on thunks
+
 
 ### Advanced
 #### Streaming of lifecycle hooks
