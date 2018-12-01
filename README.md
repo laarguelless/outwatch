@@ -521,7 +521,7 @@ import rx._
 import monix.reactive._
 import monix.execution._
 
-implicit def RxAsValueObservable: AsValueObservable[Rx] = new AsValueObservable[Rx] {
+implicit object RxAsValueObservable extends AsValueObservable[Rx] {
   override def as[T](stream: Rx[T]): ValueObservable[T] = new ValueObservable[T]{
     def value = Option(stream.now)
     def observable = Observable.create[T](OverflowStrategy.Unbounded) { observer =>
