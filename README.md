@@ -571,6 +571,15 @@ helpers.OutwatchTracing.patch.zipWithIndex.foreach { case (proxy, index) =>
 }
 ```
 
+### tracing exceptions in your components
+
+Dynamic components with `Observables` can have errors. This is if `onError` is called on the underlying `Observer`. You can trace them in OutWatch with:`
+```scala
+helpers.OutwatchTracing.error.foreach { case throwable =>
+  org.scalajs.dom.console.log(s"Exception while patching an Outwatch compontent: ${throwable.getMessage}")
+}
+```
+
 
 
 ## LICENSE
